@@ -6,15 +6,15 @@ on:
       aks_cluster_name:
         description: 'Name of the AKS Cluster to deploy to'
         required: true
-        default: '<aks_cluster_name>'
+        default: 'week08aks' #updated placeholder
       aks_resource_group:
         description: 'Resource Group of the AKS Cluster'
         required: true
-        default: '<resource_group_name>'
+        default: 'deakinuni' #updated placeholder
       aks_acr_name:
         description: 'Name of ACR'
         required: true
-        default: '<acr_name>'
+        default: 'sit722registry' #updated placeholder
 
 jobs:
   deploy_backend:
@@ -30,9 +30,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2 #should be a separate login 
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_AKS_CREDENTIALS }} #link to second SP
           enable-AzPSSession: true
 
       - name: Set Kubernetes context (get AKS credentials)
