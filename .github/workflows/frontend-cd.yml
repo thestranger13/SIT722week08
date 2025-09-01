@@ -43,6 +43,8 @@ jobs:
   deploy_frontend:
     runs-on: ubuntu-latest
     environment: Production
+    env:
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
 
     steps:
       - name: Checkout repository
@@ -56,11 +58,8 @@ jobs:
 
       # Login to Azure Container Registry (ACR)
       - name: Login to Azure Container Registry
-        # run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}
-        run: |
-          ACR_FQDN="${{ secrets.AZURE_CONTAINER_REGISTRY }}"
-          ACR_NAME="${ACR_FQDN%%.azurecr.io}"
-          az acr login --name "$ACR_NAME"
+        run: az acr login --name $(echo "${{ env.ACR_LOGIN_SERVER }}" | cut -d. -f1)
+
 
       - name: Inject Backend IPs into Frontend main.js
         run: |
