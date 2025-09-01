@@ -56,7 +56,11 @@ jobs:
 
       # Login to Azure Container Registry (ACR)
       - name: Login to Azure Container Registry
-        run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+        # run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+        run: |
+          ACR_FQDN="${{ secrets.AZURE_CONTAINER_REGISTRY }}"
+          ACR_NAME="${ACR_FQDN%%.azurecr.io}"
+          az acr login --name "$ACR_NAME"
 
       - name: Inject Backend IPs into Frontend main.js
         run: |
