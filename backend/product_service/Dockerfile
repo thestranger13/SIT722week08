@@ -1,5 +1,5 @@
 # week08/backend/product_service/Dockerfile
-# updated the file again
+# updated the file
 
 FROM python:3.10-slim-buster
 
