@@ -39,15 +39,9 @@ jobs:
         run: |
           az aks get-credentials --resource-group ${{ github.event.inputs.aks_resource_group }} --name ${{ github.event.inputs.aks_cluster_name }} --overwrite-existing
 
-      - name: Attach ACR # updated 
+      - name: Attach ACR
         run: |
-          az account set --subscription ad3fb22b-14d8-49e6-b488-4a2448c1566b
-          ACR_ID=$(az acr show -n ${{ github.event.inputs.aks_acr_name }} --query id -o tsv)
-          echo "Using ACR: $ACR_ID"
-          az aks update \
-            --name  ${{ github.event.inputs.aks_cluster_name }} \
-            --resource-group ${{ github.event.inputs.aks_resource_group }} \
-            --attach-acr "$ACR_ID"
+          az aks update --name ${{ github.event.inputs.aks_cluster_name }} --resource-group ${{ github.event.inputs.aks_resource_group }} --attach-acr ${{ github.event.inputs.aks_acr_name }}
 
       - name: Deploy Backend Infrastructure (Namespace, ConfigMaps, Secrets, Databases)
         run: |
