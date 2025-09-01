@@ -30,9 +30,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Azure
-        uses: azure/login@v2 #should be a separate login 
+        uses: azure/login@v1 
         with:
-          creds: ${{ secrets.AZURE_AKS_CREDENTIALS }} #link to second SP
+          creds: ${{ secrets.AZURE_CREDENTIALS }} 
           enable-AzPSSession: true
 
       - name: Set Kubernetes context (get AKS credentials)
